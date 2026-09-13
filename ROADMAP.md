@@ -1,24 +1,27 @@
 # Roadmap
 
-This roadmap optimizes for **information gained per unit of implementation effort**. The first objective is not feature completeness; it is to discover whether the proposed research object is useful and fair before expensive benchmark infrastructure is built.
+This roadmap optimizes for **decision-changing external evidence per unit of implementation effort**. The first objective is not feature completeness; it is to discover whether the proposed research object is useful and fair before expensive benchmark infrastructure is built.
 
 ## Guiding rule
 
 > Build the smallest artifact that can attract a high-quality correction from somebody who understands a materially different language-engineering system.
 
+A compliment is not a research result. A corrected assumption, principled `NOT_APPLICABLE`, system-native mechanism, prior-art falsification, validated mapping, or external implementation is.
+
 ---
 
 ## Calendar to LangDev 2026
 
-LangDev takes place **8–9 October 2026 in Málaga**. The pre-conference plan is deliberately compressed around feedback rather than infrastructure:
+LangDev takes place **8–9 October 2026 in Málaga**. The pre-conference plan is deliberately compressed around external validity:
 
-- **8–13 September:** Phase 0 + first 4 litmus cases.
-- **14–20 September:** complete the 8–12-case paper MVP and run adversarial/prior-art review.
-- **21–27 September:** implement the sharpest cases in UniversalToolchain; preserve failures/limitations.
-- **28 September–4 October:** targeted external review with 5–8 researchers/maintainers; revise the suite.
-- **5–7 October:** freeze three conference-ready litmus cards and a short reviewer packet.
-- **8–9 October:** LangDev field test and structured expert feedback.
-- **10–18 October:** incorporate feedback and choose the first non-UT implementation.
+- **8–10 September:** 3-case Smoke MVP + one UT evidence record + first 5 expert sends.
+- **11–14 September:** incorporate objections; freeze revised Smoke cases.
+- **15–20 September:** obtain the first non-UT mapping/reproduction.
+- **21–27 September:** grow to a ~5-case Public MVP only if feedback justifies it; prepare decision log and citation metadata.
+- **28 September–2 October:** public/conference artifact freeze; publish broader content only if the external-review gate is met.
+- **3–7 October:** conference protocol rehearsal; no new benchmark architecture.
+- **8–9 October:** LangDev field experiment.
+- **10–18 October:** convert observations to validated issues/results and choose the research-paper/tool direction.
 
 Missing a date is less damaging than building infrastructure before the cases survive criticism.
 
@@ -26,7 +29,6 @@ Missing a date is less damaging than building infrastructure before the cases su
 
 ## Phase 0 — Research boundary and repository bootstrap
 
-**Target:** now  
 **Goal:** make the project legible and prevent premature implementation drift.
 
 Deliverables:
@@ -34,242 +36,239 @@ Deliverables:
 - [x] Apache-2.0 license
 - [x] research specification
 - [x] staged roadmap
-- [ ] short decision log template
-- [ ] issue template for proposed litmus cases
+- [x] short decision log
+- [x] Smoke reviewer packet
+- [x] first three Smoke case specifications
 
 Exit criteria:
 
 - scope and non-goals are explicit;
-- UniversalToolchain is defined as reference implementation, not oracle;
-- MVP requires external correction.
+- UniversalToolchain is a reference implementation, not oracle;
+- external correction is required for Public MVP;
+- `NOT_APPLICABLE` and `INVALID_CASE` are first-class evidence.
 
 Do **not** build a generic DSL or runner here.
 
 ---
 
-## Phase 1 — Paper MVP: 8–12 litmus specifications
+## Phase 1 — Smoke MVP: 3 externally attackable cases
 
-**Goal:** validate the taxonomy and case format before writing harness infrastructure.
+**Goal:** test the research object before expanding the corpus.
 
-### 1.1 Draft the first cases
+Initial cases:
 
-Create 8–12 `LC###` case specifications across at least five taxonomy groups.
+1. `LC002 OrderStability`
+2. `LC004 IrrelevantExtensionNonInterference`
+3. `LC005 CrossLayerRealizationCompleteness`
 
-Priority order:
+Each case must include:
 
-1. provider ambiguity;
-2. registration permutation;
-3. hidden transformation ordering;
-4. irrelevant-extension non-interference;
-5. backend hole/parity;
-6. runtime replanning/fallback;
-7. provenance/version drift;
-8. structural-vs-semantic mismatch.
+- applicability / principled N/A boundary;
+- independence assumption;
+- stimulus;
+- acceptable outcome classes;
+- unacceptable outcome class;
+- decision phase/owner fields;
+- prior-art anchors;
+- strongest unfairness argument;
+- falsifier;
+- threats to validity.
 
-Add deeper cases only if the first set does not cover the phenomenon cleanly.
+### Smoke evidence
 
-### 1.2 Add controls
+One revision-pinned UT worked record is sufficient before outreach. Additional UT implementations are added only after external criticism selects which cases are worth preserving.
 
-At minimum:
+The initial UT record may reuse existing replayable PlanFuzz evidence, but its evidence type and claim boundary must be explicit. Seeded-fault evidence is **not** a discovered compiler defect.
 
-- one case where composition should clearly succeed;
-- one mutant that should clearly be rejected;
-- one intentionally `NOT_APPLICABLE` example demonstrating that the suite is not a universal checklist.
+### Smoke review CTA
 
-### 1.3 Run adversarial case review
+Use one first question only:
 
-For every case ask:
+> **Which ONE of these three cases is wrong or unfair for your architecture, and what assumption should change?**
 
-- is this actually a composition failure or merely a design preference?
-- does the expected outcome secretly encode UniversalToolchain?
-- can a system legitimately define semantics that make this non-ambiguous?
-- is the case minimal?
-- does prior art already provide a better formulation?
+Follow-up questions about missing cases, decision owner, implementation, or collaboration come only after engagement.
 
-**Exit criteria:** 8–12 cases survive internal adversarial review with explicit oracles.
+**Exit criteria:**
 
----
-
-## Phase 2 — Reference implementation, not reference truth
-
-**Goal:** test whether cases are executable and discover weaknesses in the specification.
-
-Implement the surviving cases in UniversalToolchain using the smallest possible fixtures.
-
-Required outputs per case:
-
-- exact revision;
-- setup/command;
-- raw evidence;
-- structured observation;
-- expected-vs-actual note;
-- case-specific limitation.
-
-### Critical credibility requirement
-
-Find and preserve at least **two** cases that UT does not cleanly solve, does not support, or solves only with an explicit trade-off.
-
-If every case is a clean UT pass, stop and redesign the suite before comparing with other systems.
-
-### Harness policy
-
-Start with scripts and structured files. Build a generalized runner only after repeated duplication proves the interface.
-
-**Exit criteria:** all MVP cases are runnable or have precise blockers; observation schema has survived real use.
+- 3 complete Smoke cases;
+- one revision-pinned UT evidence record;
+- reviewer packet under roughly 900 words;
+- 5 personalized review requests prepared/sent by the human operator;
+- at least one external response converted into a pending or accepted specification decision before the corpus expands materially.
 
 ---
 
-## Phase 3 — First external feedback loop
+## Phase 2 — External correction before broad implementation
 
-**Goal:** maximize correction quality before breadth.
+**Goal:** maximize correction quality before code volume.
 
-Do not begin with mass outreach. Select **5–8 people** whose systems/experience represent different approaches.
+Select **5 people** for the first wave based on expected information value rather than fame. Strong categories include:
 
-Suggested target categories:
-
-- language workbench researchers;
-- maintainers/authors from Neverlang, MontiCore, Spoofax, MPS, ableC/Silver, Langium, or related systems;
-- LangDev speakers/attendees working on DSL composition or compiler architecture.
-
-### Outreach artifact
-
-Send a reviewer a **small packet**, not the whole research agenda:
-
-- one-paragraph motivation;
-- 3–5 litmus cases most relevant to their system;
-- a one-page explanation of the observation model;
-- three concrete questions:
-  1. Which case is unfair or underspecified?
-  2. Which important failure mode is missing?
-  3. How would your architecture represent the owner of this decision?
-
-Do not ask "what do you think about my framework?"
+- LWB/benchmark researchers;
+- maintainers/authors from MontiCore, Neverlang, ableC/Silver, MPS, Spoofax, Langium or related systems;
+- LangDev speakers/organizers with direct composition/testing experience.
 
 ### Feedback accounting
 
-Record each substantive objection as:
+Use response quality:
+
+- `0` — social/compliment;
+- `1` — applicability/outcome label;
+- `2` — mechanism, phase, owner, or concrete prior art;
+- `3` — decision-changing case/taxonomy/claim correction;
+- `4` — durable issue/PR/implementation/reuse.
+
+A response is substantive at `>=2` and decision-changing at `>=3`.
+
+Record each objection as:
 
 - accepted and repaired;
 - rejected with evidence;
 - unresolved;
-- case split/merged/deleted;
+- case split/merged/deleted/narrowed;
 - new case candidate.
 
-**Exit criteria:** at least 3 substantive external reviews and at least one material change to the suite caused by them.
+### Durable-conversion rule
+
+When an expert makes a useful verbal/email observation, the benchmark author drafts the GitHub issue/result and asks the expert only to confirm/correct the interpretation. Do not transfer documentation burden to the reviewer.
+
+**Exit criteria:** at least one decision-changing correction and a revised Smoke set.
 
 ---
 
-## Phase 4 — LangDev field test
+## Phase 3 — First non-UT mapping/reproduction
 
-**Goal:** use the conference as a research instrument, not only a presentation venue.
+**Goal:** prove that at least one case survives contact with a materially different architecture.
 
-Prepare 3 highly legible litmus cards:
+Choose the external system based on:
 
-- ambiguity/ownership;
-- non-interference/determinism;
-- structural-vs-semantic composition.
-
-For conversations after the talk, ask experts how their architecture would classify the case:
-
-- `ACCEPT_WITH_DEFINED_SEMANTICS`
-- `REJECT`
-- `REQUIRE_EXPLICIT_POLICY`
-- `NOT_APPLICABLE`
-- `OTHER`
-
-Capture explanations, not just labels.
-
-### Conference success criterion
-
-At least 5 high-information conversations where the answer changes the taxonomy, oracle, comparison target, or research claim.
-
-A compliment that changes nothing is not counted as research feedback.
-
----
-
-## Phase 5 — First non-UT implementation
-
-**Goal:** test portability of the suite before building scale.
-
-Choose **one** external system based on:
-
-- maintainer/researcher interest;
+- active reviewer interest;
 - architectural contrast with UT;
 - setup cost;
-- applicability of at least 3 MVP cases;
-- likelihood of getting interpretation reviewed by somebody who knows the system.
+- applicability of a Smoke case;
+- likelihood of getting the interpretation checked by somebody who knows the system.
 
-Implement only 2–4 cases initially.
-
-Strong candidates will likely come from different families rather than from the closest UT analogue.
+Start with **one case**, not a framework port.
 
 ### Required comparison discipline
 
-- do not translate every system into UT terminology;
 - preserve system-native mechanisms;
+- do not translate everything into UT terminology;
 - document semantic differences;
-- let maintainers mark a case `NOT_APPLICABLE` with rationale;
-- get interpretation reviewed before publishing comparative claims.
+- allow `NOT_APPLICABLE` with rationale;
+- get interpretation reviewed before publishing comparative claims when feasible;
+- record implementation effort as a descriptive observation, not a score.
 
-**Exit criteria:** one materially different system has a reviewed implementation/analysis for at least one case, and the shared schema still makes sense.
+**Exit criteria:** one materially different system has a reviewed mapping or executable result for at least one Smoke case, and the case format still makes sense.
 
 ---
 
-## Phase 6 — MVP-1 release
+## Phase 4 — Public MVP candidate (~5 cases)
 
-Tag `mvp-1` only when the specification's MVP DoD is met.
+**Goal:** expand only after evidence demonstrates missing dimensions.
 
-Release contents:
+Do not choose cases 4–5 from the original catalog merely to fill slots. Promote a new case only when feedback or evidence reveals a distinct phenomenon.
 
-- 8–12 reviewed cases;
-- taxonomy;
-- case/observation schema;
-- UT reference results;
-- at least one external-system implementation or reviewed mapping;
-- raw evidence and replay instructions;
+Public MVP requires:
+
+- ~5 externally corrected cases;
+- at least 3 substantive external reviews;
+- at least one externally caused case revision/split/merge/delete/narrowing;
+- two non-UT mappings where feasible;
+- at least one executable non-UT result;
+- at least one public UT limitation/trade-off;
 - decision log;
-- known limitations;
-- citation metadata (`CITATION.cff`) if the artifact is stable enough.
+- case versioning/registry;
+- citation metadata.
 
-### Public narrative
-
-The release message should lead with failures/questions, not with UT.
-
-Preferred framing:
-
-> "Here are small cases that expose where independently authored language extensions need a global decision. We want maintainers to tell us which cases are wrong."
-
-Avoid:
-
-> "Our framework solves extensibility better than existing language workbenches."
+**Do not build:** generalized runner, dashboard, leaderboard, architecture DSL.
 
 ---
 
-## Phase 7 — Public feedback amplifier
+## Phase 5 — Public feedback amplifier
 
-Only after the MVP cases are concrete, publish a high-signal article/post.
+Publish broader content only after the external-review gate is met.
 
-Possible Habr framing:
+Preferred framing leads with a concrete interaction, not UT superiority:
 
-- "Два расширения работают отдельно. Почему вместе они ломают язык?"
-- "10 litmus-тестов для расширяемых языков: где заканчивается модульность?"
+> "Two extensions work independently. What should happen when they meet?"
 
-The article should contain real cases and invite counterexamples/PRs.
+Article/post CTA:
 
-Success metric:
+> "Choose one case and tell us what your framework does — or why the case itself is wrong."
+
+Success metrics:
 
 - useful corrections;
 - implementations;
-- new counterexamples;
+- counterexamples;
 - introductions to relevant researchers/maintainers.
 
-Views and likes are secondary metrics.
+Views, likes, stars and compliments are distribution metrics only.
+
+---
+
+## Phase 6 — LangDev field experiment
+
+**Goal:** use the conference as a research instrument, not only a presentation venue.
+
+Carry the same three Smoke cases unless external review has invalidated one.
+
+### Conversation protocol
+
+1. Present the scenario before showing outcome categories.
+2. Ask what the system would do.
+3. Ask where the decision is owned.
+4. Ask which assumption in the case is wrong.
+5. Record applicability, mechanism, phase, owner, objection and follow-up permission.
+
+Do not ask "Would your framework pass this test?"
+
+### Conference CTA
+
+> **Classify one case — or tell me which assumption is wrong.**
+
+### Conference success criterion
+
+At least 5 conversations produce one or more of:
+
+- concrete counterexample;
+- system-native mechanism;
+- principled N/A boundary;
+- new acceptable outcome class;
+- prior-art correction;
+- case split/merge/delete;
+- reproduction pointer;
+- agreement to validate a written result.
+
+A compliment that changes nothing does not count.
+
+---
+
+## Phase 7 — Research MVP
+
+Expand to 6–8 reviewed cases and at least two materially different non-UT architecture families only if the earlier gates are healthy.
+
+Possible result dimensions:
+
+- applicability;
+- detection/resolution phase;
+- decision owner;
+- policy explicitness;
+- determinism under defined permutations;
+- replayability/provenance;
+- diagnostic actionability;
+- host/base-language modifications required;
+- semantic-oracle support;
+- implementation effort.
+
+Do not collapse dimensions into a leaderboard without an independently justified model.
 
 ---
 
 ## Phase 8 — Decide whether automation is justified
 
-Only now decide whether repeated implementation work justifies:
+Only after repeated cross-system work decide whether duplication justifies:
 
 - generalized case runner;
 - JSON/YAML schema validation tooling;
@@ -282,40 +281,15 @@ Only now decide whether repeated implementation work justifies:
 
 ### DSL gate
 
-Do not design a DSL until at least 10 cases reveal repeated primitives and at least two different systems demonstrate that those primitives are not UT-specific.
-
-If a simple schema + code remains clearer, do not build a DSL.
+Do not design a DSL until repeated cases across at least two materially different systems reveal stable primitives that are not UT-specific. If Markdown + code remains clearer, keep Markdown + code.
 
 ---
 
-## Phase 9 — Comparative study expansion
+## Phase 9 — Publication decision
 
-**Goal:** turn the artifact into research evidence rather than a demo.
+Choose the publication form based on evidence, not prestige first.
 
-Expand to 3–5 architecturally diverse systems only if early external work is tractable.
-
-Possible result dimensions:
-
-- detection phase;
-- explicitness of policy;
-- determinism;
-- replayability;
-- diagnostic actionability;
-- host/base-language modifications required;
-- semantic oracle support;
-- implementation effort for the case.
-
-Do not collapse dimensions into a leaderboard without an independently justified model.
-
-Add a systematic related-work review and explicit threat-to-validity analysis.
-
----
-
-## Phase 10 — Publication decision
-
-Choose publication form based on evidence, not prestige first.
-
-### If the strongest result is a new taxonomy + benchmark artifact
+### If the strongest result is an externally corrected taxonomy + benchmark artifact
 
 Target software-language-engineering venues/workshops/artifact tracks.
 
@@ -323,13 +297,13 @@ Target software-language-engineering venues/workshops/artifact tracks.
 
 Target a full empirical/software-language-engineering paper.
 
-### If the strongest result is a conceptual architecture argument with counterexamples
+### If the strongest result is a configuration-aware testing tool with real minimized defects
 
-Consider an essay/position/workshop format before claiming a general theorem.
+Make PlanFuzz primary and LCLS the minimized/canonical failure corpus; target testing/tool venues as appropriate.
 
 ### If external feedback shows the niche is already covered better
 
-Pivot the repository toward reproducing/extending the stronger prior work rather than defending the original framing.
+Pivot toward reproducing/extending the stronger prior work rather than defending the original framing.
 
 That is a successful research outcome, not a failure.
 
@@ -337,22 +311,23 @@ That is a successful research outcome, not a failure.
 
 # Immediate backlog
 
-## P0 — next actions
+## P0 — now
 
-- [ ] Create `LC001 ProviderAmbiguity` specification.
-- [ ] Create `LC002 RegistrationPermutation` specification.
-- [ ] Create `LC003 HiddenTransformationOrdering` specification.
-- [ ] Create `LC004 IrrelevantExtensionNonInterference` specification.
-- [ ] Draft `case.schema.json` only after at least 3 case Markdown drafts expose stable fields.
-- [ ] Map existing UniversalToolchain/PlanFuzz evidence to those cases without changing the cases to fit UT.
-- [ ] Identify 10 candidate external reviewers, then rank by information value and probability of response.
+- [x] Create `LC002 OrderStability`.
+- [x] Create `LC004 IrrelevantExtensionNonInterference`.
+- [x] Create `LC005 CrossLayerRealizationCompleteness`.
+- [x] Add one current, revision-pinned UT evidence mapping for LC004.
+- [x] Prepare a one-page Smoke reviewer packet.
+- [x] Prepare a response template and decision log.
+- [ ] Send five personalized review requests.
+- [ ] Convert the first substantive objection into a documented decision.
 
-## P1 — after first four cases
+## P1 — after first external correction
 
-- [ ] Prior-art check for each case.
-- [ ] Add controls/mutants.
-- [ ] Decide which 4–6 cases are best suited for pre-LangDev outreach.
-- [ ] Prepare a one-page reviewer packet.
+- [ ] Revise/drop/split cases based on feedback.
+- [ ] Select the lowest-friction non-UT mapping from engaged reviewers.
+- [ ] Implement or validate exactly one external case.
+- [ ] Decide whether cases 4–5 are evidence-justified.
 
 ## Explicitly deferred
 
@@ -360,9 +335,10 @@ That is a successful research outcome, not a failure.
 - web dashboard;
 - scoring/leaderboard;
 - architecture DSL;
+- 8–12-case completion as a prerequisite to outreach;
 - 30+ case catalog;
 - mass outreach;
-- claims of market/product fit;
+- challenge/competition proposal before Public MVP;
 - monetization engineering.
 
 ---
@@ -377,4 +353,20 @@ At the end of every phase, answer:
 4. Are we building infrastructure because evidence requires it, or because it is technically attractive?
 5. Has an external expert changed the artifact yet?
 
-If the answer to #5 remains "no" after Phase 3, stop expanding the benchmark and fix the feedback strategy first.
+## Hard pivot review
+
+A pivot review is mandatory if:
+
+- two independent experts identify the same stronger prior work that substantially subsumes the central claim;
+- three independent experts classify at least two of the three Smoke cases as `NOT_APPLICABLE` for principled architectural reasons;
+- a case still requires UT-specific vocabulary after two external revisions.
+
+Candidate pivot: narrow the comparative domain or make PlanFuzz/configuration-aware composition testing the primary artifact.
+
+## Challenge-organization gate
+
+Do not propose an LWC/ICST/public competition before:
+
+- Public MVP exists;
+- one non-UT executable result exists;
+- at least two maintainers/researchers say the task is fair/useful.
